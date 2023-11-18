@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <% if (user) { %>
+          <li>Welcome, <%= user.displayName %></li>
+          <li><a href="/logout">Logout</a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Image Gallery</h1>
+    <% if (user) { %>
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload</button>
+      </form>
+    <% } %>
+    <div class="gallery">
+      <% images.forEach(image => { %>
+        <div class="image">
+          <img src="/uploads/<%= image.filename %>" alt="<%= image.originalname %>">
+          <% if (user) { %>
+            <form action="/delete/<%= image._id %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  </main>
+</body>
+</html>

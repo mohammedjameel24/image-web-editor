@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <% if (user) { %>
+          <li>Welcome, <%= user.displayName %></li>
+          <li><a href="/upload">Upload Image</a></li>
+          <li><a href="/logout">Logout</a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/signup">Signup</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Image Gallery</h1>
+    <% if (user) { %>
+      <div class="gallery">
+        <% images.forEach(image => { %>
+          <div class="image">
+            <img src="/uploads/<%= image.filename %>" alt="<%= image.originalname %>">
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p>No images found.</p>
+    <% } %>
+  </main>
+</body>
+</html>
